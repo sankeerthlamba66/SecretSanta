@@ -1,0 +1,53 @@
+﻿@model SecretSanta.Models.ViewModels.ShowEmployee
+
+@{
+    ViewData["Title"] = "EditEmployeeDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>EditEmployeeDetails</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditEmployeeDetails">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.EmployeeDetails.EmployeeName" class="control-label"></label>
+                <input asp-for="@Model.EmployeeDetails.EmployeeName" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeDetails.EmployeeName" class="text-danger"></span>
+            </div>
+           <!-- <div class="form-group">
+                <label asp-for="@Model.EmployeeDetails.EmployeeNumber" class="control-label"></label>
+                <input asp-for="@Model.EmployeeDetails.EmployeeNumber" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeDetails.EmployeeNumber" class="text-danger"></span>
+            </div> 
+
+            <div class="form-group">
+                <label asp-for="@Model.EmployeeDetails.EmployeeEntity" class="control-label"></label>
+                <input asp-for="@Model.EmployeeDetails.EmployeeEntity" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeDetails.EmployeeEntity" class="text-danger"></span>
+            </div> -->
+            <div class="form-group">
+                <label asp-for="@Model.EmployeeDetails.EmployeePhone" class="control-label"></label>
+                <input asp-for="@Model.EmployeeDetails.EmployeePhone" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeDetails.EmployeePhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.EmployeeDetails.EmployeeEmail" class="control-label"></label>
+                <input asp-for="@Model.EmployeeDetails.EmployeeEmail" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeDetails.EmployeeEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

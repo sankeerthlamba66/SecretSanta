@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <main class="modal-dialog" style="width:100%; max-width:400px; margin:auto; padding-top:50px; padding-bottom:50px">
+        <div class="modal-content rounded-5 shadow p-3">
+            <form asp-controller="Home" asp-action="ShowSanta" method="get">
+                <h4 class="mb-3">Welcome to the Santa Finder</h4>
+                <label for="EmployeeId" class="form-label">Enter Your Employee Id</label>
+                <div class="form-floating">
+                    <input class="form-control" type="text" id="EmployeeId" name="EmployeeId" />
+                </div>
+                <div class="form-floating">&nbsp;</div>
+                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Find My Santa" />
+            </form>
+        </div>
+    </main>
+</div>

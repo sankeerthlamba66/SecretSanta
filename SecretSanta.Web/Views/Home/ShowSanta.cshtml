@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model SecretSanta.Models.ViewModels.ShowSanta;
+@{
+    <div class="col-md-8 col-lg-6" style="margin: auto">
+        <h1 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Hello!! @Model.EmployeeName</span>
+        </h1>
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Please find below the details of your Santa</span>
+        </h4>
+        <partial name="_EmployeeDetails.cshtml" model="@Model.SantaDetails">
+    </div>
+}
