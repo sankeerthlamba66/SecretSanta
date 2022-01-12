@@ -27,5 +27,8 @@ namespace SecretSanta.Business
         {
             return new Data.Ado.EmployeeQueries().getProjectDetails(EmployeeId);
         }
+        public void setImagePath(string EmployeeNumber, string uniqueFileName)
+        {    new Data.Ado.EmployeeQueries().setImagePath(EmployeeNumber,uniqueFileName);
+        }
     }
 }

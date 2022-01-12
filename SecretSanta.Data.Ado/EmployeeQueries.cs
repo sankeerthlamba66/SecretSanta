@@ -145,5 +145,24 @@ namespace SecretSanta.Data.Ado
             
 
         }
+        public void setImagePath(string employee_number,string uniqueFileName)
+        {
+            var connection = ConnectionManager.GetNewOpenConnection();
+            string updateQuery = "Update Employees set imagepath=" + uniqueFileName + "' where employee_number='" + employee_number + "'";
+            try
+            {
+                SqlCommand cmd = new SqlCommand(updateQuery, connection);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                ConnectionManager.CloseConnectionIfOpen(connection);
+            }
+
+        }
     }
 }

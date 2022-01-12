@@ -70,7 +70,8 @@ namespace SecretSanta.Web.Controllers
         public IActionResult EditEmployeeDetails()
         {
             var showEmployeeDetails = new EmployeeManager().GetShowEmployeeData(Session.EmployeeId);
-            
+
+
             return View(showEmployeeDetails);
         }
 
@@ -78,6 +79,8 @@ namespace SecretSanta.Web.Controllers
         public ActionResult EditEmployeeDetails(Employee EmployeeDetails)
         {
             EmployeeDetails.EmployeeNumber = Session.EmployeeId;
+
+            //UploadProfile(EmployeeDetails.profileImage);
 
             new EmployeeManager().updateEmployeeDetails(EmployeeDetails);
 
@@ -106,11 +109,25 @@ namespace SecretSanta.Web.Controllers
             return PartialView("", new EmployeeManager().getProjectDetails(Session.EmployeeId));
         }
         [HttpPost("/UploadProfile")]
-        //public async Task<IActionResult>  UploadProfile(IFormFile profileImage)
-        //{
+        public void UploadProfile(IFormFile profileImage)
+        {
+            string uniqueFileName = null;
+            if (profileImage != null)
+            {
+                string uploadfolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + profileImage.FileName;
+                string filePath = Path.Combine(uploadfolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    profileImage.CopyTo(fileStream);
+                }
+                
+            }
+            new EmployeeManager().setImagePath(Session.EmployeeId, uniqueFileName);
             
             
-        //}
+
+        }
 
         public IActionResult Privacy()
         {

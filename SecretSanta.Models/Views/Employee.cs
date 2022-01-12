@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace SecretSanta.Models.Views
 {
@@ -19,5 +20,6 @@ namespace SecretSanta.Models.Views
         public string EmployeePhone { get; set; }
         public string EmployeeEmail { get; set; }
         public string ImagePath { get; set; }
+        public IFormFile profileImage { get; set; }
     }
 }
