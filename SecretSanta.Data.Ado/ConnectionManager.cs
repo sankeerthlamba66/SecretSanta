@@ -4,24 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using SecretSanta.Models.Logger;
 
 namespace SecretSanta.Data.Ado
 {
     internal class ConnectionManager
     {
+        public readonly ILoggerManager _logger;
+
+        public ConnectionManager(ILoggerManager logger)
+        {
+            _logger = logger;
+        }
+
         public static SqlConnection GetConnection()
         {
-            SqlConnection NewConnection = new SqlConnection("Data Source=Tekfriday282;Initial Catalog=secret_santa;Persist Security Info=True;User ID=sa;Password=friday123!");
-            return NewConnection;
+            try
+            {
+                SqlConnection NewConnection = new SqlConnection("Data Source=Tekfriday282;Initial Catalog=secret_santa;Persist Security Info=True;User ID=sa;Password=friday123!");
+                return NewConnection;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return ("")
+            }
         }
 
         public static SqlConnection GetNewOpenConnection()
         {
-            SqlConnection NewConnection = GetConnection();
+            try
+            {
+                SqlConnection NewConnection = GetConnection();
 
-            NewConnection.Open();
+                NewConnection.Open();
 
-            return NewConnection;
+                return NewConnection;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
         }
 
         public static void CloseConnectionIfOpen(SqlConnection? Conn)

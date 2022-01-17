@@ -16,6 +16,6 @@ namespace SecretSanta.Models.ViewModels
             this.EmployeeDetails = new Employee();
         }
         public Employee EmployeeDetails{ get; set; }
-        public IFormFile profileImage { get; set; }
+        
     }
 }

@@ -15,6 +15,19 @@ namespace SecretSanta.Business
             var showEmployeeData = new Data.Ado.EmployeeQueries();
             return showEmployeeData.GetShowEmployeeData(EmployeeId);
         }
+
+        public Employee GetEmployee(string EmployeeId)
+        {
+            var showEmployeeData = new Data.Ado.EmployeeQueries();
+            return showEmployeeData.GetEmployee(EmployeeId);
+        }
+
+        public EmployeeEdit GetEmployeeEdit(string EmployeeId)
+        {
+            var showEmployeeData = new Data.Ado.EmployeeQueries();
+            return showEmployeeData.GetEmployeeEdit(EmployeeId);
+        }
+
         public void updateEmployeeDetails(Employee EmployeeDetails)
         {
             new Data.Ado.EmployeeQueries().updateEmployeeDetails(EmployeeDetails);
@@ -26,9 +39,6 @@ namespace SecretSanta.Business
         public ShowProjectDetails getProjectDetails(string EmployeeId)
         {
             return new Data.Ado.EmployeeQueries().getProjectDetails(EmployeeId);
-        }
-        public void setImagePath(string EmployeeNumber, string FileName)
-        {    new Data.Ado.EmployeeQueries().setImagePath(EmployeeNumber,FileName);
         }
     }
 }

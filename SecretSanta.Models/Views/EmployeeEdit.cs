@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace SecretSanta.Models.Views
 {
-    public class Employee : EmployeeBase
+    public class EmployeeEdit : EmployeeBase
     {
         [Display(Name = "Profile Image")]
-        public string ImagePath { get; set; }
+        public IFormFile profileImage { get; set; }
     }
-
 }

@@ -27,7 +27,9 @@ namespace SecretSanta.Data.Ado
                     ShowEmployeeDetails.EmployeeDetails.EmployeeEntity = (string)rdrEmployee["entity"];
                     ShowEmployeeDetails.EmployeeDetails.EmployeeEmail = (string)rdrEmployee["email"];
                     ShowEmployeeDetails.EmployeeDetails.EmployeePhone = (string)rdrEmployee["phone"];
+                    ShowEmployeeDetails.EmployeeDetails.ImagePath = (string)rdrEmployee["imagePath"];
                     
+
                 }
                 else
                 {
@@ -36,6 +38,7 @@ namespace SecretSanta.Data.Ado
                     ShowEmployeeDetails.EmployeeDetails.EmployeeEntity = "";
                     ShowEmployeeDetails.EmployeeDetails.EmployeeEmail = "";
                     ShowEmployeeDetails.EmployeeDetails.EmployeePhone = "";
+                    
                 }
                 rdrEmployee.Close();
                 return ShowEmployeeDetails;
@@ -55,7 +58,7 @@ namespace SecretSanta.Data.Ado
         public void updateEmployeeDetails(Employee EmployeeDetails)
         {
             var connection = ConnectionManager.GetNewOpenConnection();
-            string updateQuery = "Update Employees set employee_name='" + EmployeeDetails.EmployeeName + "',phone='" + EmployeeDetails.EmployeePhone + "',email='" + EmployeeDetails.EmployeeEmail + "' where employee_number='" + EmployeeDetails.EmployeeNumber + "'";
+            string updateQuery = "Update Employees set employee_name='" + EmployeeDetails.EmployeeName + "',phone='" + EmployeeDetails.EmployeePhone + "',email='" + EmployeeDetails.EmployeeEmail + "', imagepath='" + EmployeeDetails.ImagePath + "' where employee_number='" + EmployeeDetails.EmployeeNumber + "'";
             try 
             {
                 SqlCommand cmd =new SqlCommand(updateQuery, connection);
@@ -70,6 +73,55 @@ namespace SecretSanta.Data.Ado
                 ConnectionManager.CloseConnectionIfOpen(connection);
             }
         }
+
+        public Employee GetEmployeeBase(string EmployeeNumber)
+        {
+            Employee employee = new Employee();
+            var connection = ConnectionManager.GetNewOpenConnection();
+            try
+            {
+                string getEmployeeDetailsQuery = "select * from employees where employee_number='" + EmployeeNumber + "'";
+                SqlCommand cmdGetEmployee = new SqlCommand(getEmployeeDetailsQuery, connection);
+                var rdrEmployee = cmdGetEmployee.ExecuteReader();
+                if (rdrEmployee.Read())
+                {
+                    employee.EmployeeNumber = (string)rdrEmployee["employee_number"];
+                    employee.EmployeeName = (string)rdrEmployee["employee_name"];
+                    employee.EmployeeEntity = (string)rdrEmployee["entity"];
+                    employee.EmployeeEmail = (string)rdrEmployee["email"];
+                    employee.EmployeePhone = (string)rdrEmployee["phone"];
+                    employee.ImagePath = rdrEmployee["imagePath"] is null ? "" : rdrEmployee["imagePath"].ToString();
+                }
+
+                rdrEmployee.Close();
+            }
+            catch
+            {
+                //_logger2.LogWarn(ex.Message);
+                //Console.WriteLine("Inner Exception:"+ex.Message);
+            }
+            finally
+            {
+                ConnectionManager.CloseConnectionIfOpen(connection);
+
+            }
+            return employee;
+        }
+
+        public Employee GetEmployee(string EmployeeNumber)
+        {
+            var employeeBase = GetEmployeeBase(EmployeeNumber);
+
+            return Models.ModelConversions.ToEmployee(employeeBase);
+        }
+
+        public EmployeeEdit GetEmployeeEdit(string EmployeeNumber)
+        {
+            var employeeBase = GetEmployeeBase(EmployeeNumber);
+
+            return Models.ModelConversions.ToEmployeeEdit(employeeBase);
+        }
+
         public List<Employee> AllEmployeeData()
         {
             List<Employee> employees = new List<Employee>();
@@ -142,27 +194,6 @@ namespace SecretSanta.Data.Ado
             {
                 ConnectionManager.CloseConnectionIfOpen(connection);
             }
-            
-
-        }
-        public void setImagePath(string employee_number,string FileName)
-        {
-            var connection = ConnectionManager.GetNewOpenConnection();
-            string updateQuery = "Update Employees set imagepath='" + FileName + "' where employee_number='" + employee_number + "'";
-            try
-            {
-                SqlCommand cmd = new SqlCommand(updateQuery, connection);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-                ConnectionManager.CloseConnectionIfOpen(connection);
-            }
-
         }
     }
 }

@@ -13,35 +13,45 @@
 }
 @if (Model is not null)
 {
+    var srtProfileImagePath = Url.Content("~/images/blank-profile-picture-973460_1280.png");
+    if(!string.IsNullOrWhiteSpace(Model.ImagePath))
+    {
+        srtProfileImagePath = Url.Content("~/images/" + Model.ImagePath);
+    }
     <div class="col-lg-@ColLgSize col-md-@ColMedSize">
         <ul class="list-group mb-3">
+            <li class="list-group-item justify-content-between lh-sm">
+                <div style="text-align:center">
+                    <img src="@srtProfileImagePath" style="max-width: 100%; height: 300px;">
+                </div>
+            </li>
             <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                    <h6 class="text-muted">Id:&nbsp;</h6>
+                    <h6 class="text-muted">@Html.DisplayNameFor(model => model.EmployeeNumber)</h6>
                     <h5 class="my-0">@Model.EmployeeNumber</h5>
                 </div>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                    <h6 class="text-muted">Name:&nbsp;</h6>
+                    <h6 class="text-muted">@Html.DisplayNameFor(model => model.EmployeeName)</h6>
                     <h5 class="my-0">@Model.EmployeeName</h5>
                 </div>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                    <h6 class="text-muted">Organization:&nbsp;</h6>
+                    <h6 class="text-muted">@Html.DisplayNameFor(model => model.EmployeeEntity)</h6>
                     <h5 class="my-0">@Model.EmployeeEntity</h5>
                 </div>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                    <h6 class="text-muted">Phone&nbsp;Number:&nbsp;</h6>
+                    <h6 class="text-muted">@Html.DisplayNameFor(model => model.EmployeePhone)</h6>
                     <h5 class="my-0">@Model.EmployeePhone</h5>
                 </div>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
-                    <h6 class="text-muted">Email:&nbsp;</h6>
+                    <h6 class="text-muted">@Html.DisplayNameFor(model => model.EmployeeEmail)</h6>
                     <h5 class="my-0">@Model.EmployeeEmail</h5>
                 </div>
             </li>

@@ -1,57 +1,56 @@
-﻿@model SecretSanta.Models.ViewModels.ShowEmployee
+﻿@model SecretSanta.Models.Views.EmployeeEdit
 
 @{
-    ViewData["Title"] = "EditEmployeeDetails";
+    ViewData["Title"] = "Edit Your Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>EditEmployeeDetails</h1>
+<h1>Edit Your Details</h1>
 
-<h4>Employee</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditEmployeeDetails">
+        <form asp-action="EditEmployeeDetails" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="@Model.EmployeeDetails.EmployeeName" class="control-label"></label>
-                <input asp-for="@Model.EmployeeDetails.EmployeeName" class="form-control" />
-                <span asp-validation-for="@Model.EmployeeDetails.EmployeeName" class="text-danger"></span>
+            <div class="form-group mt-4">
+                <label asp-for="@Model.EmployeeName" class="form-label"></label>
+                <input asp-for="@Model.EmployeeName" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeName" class="text-danger"></span>
             </div>
            <!-- <div class="form-group">
-                <label asp-for="@Model.EmployeeDetails.EmployeeNumber" class="control-label"></label>
-                <input asp-for="@Model.EmployeeDetails.EmployeeNumber" class="form-control" />
-                <span asp-validation-for="@Model.EmployeeDetails.EmployeeNumber" class="text-danger"></span>
+                <label asp-for="@Model.EmployeeNumber" class="control-label"></label>
+                <input asp-for="@Model.EmployeeNumber" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeNumber" class="text-danger"></span>
             </div> 
 
             <div class="form-group">
-                <label asp-for="@Model.EmployeeDetails.EmployeeEntity" class="control-label"></label>
-                <input asp-for="@Model.EmployeeDetails.EmployeeEntity" class="form-control" />
-                <span asp-validation-for="@Model.EmployeeDetails.EmployeeEntity" class="text-danger"></span>
+                <label asp-for="@Model.EmployeeEntity" class="control-label"></label>
+                <input asp-for="@Model.EmployeeEntity" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeEntity" class="text-danger"></span>
             </div> -->
-            <div class="form-group">
-                <label asp-for="@Model.EmployeeDetails.EmployeePhone" class="control-label"></label>
-                <input asp-for="@Model.EmployeeDetails.EmployeePhone" class="form-control" />
-                <span asp-validation-for="@Model.EmployeeDetails.EmployeePhone" class="text-danger"></span>
+            <div class="form-group mt-4">
+                <label asp-for="@Model.EmployeePhone" class="form-label"></label>
+                <input asp-for="@Model.EmployeePhone" class="form-control" />
+                <span asp-validation-for="@Model.EmployeePhone" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.EmployeeDetails.EmployeeEmail" class="control-label"></label>
-                <input asp-for="@Model.EmployeeDetails.EmployeeEmail" class="form-control" />
-                <span asp-validation-for="@Model.EmployeeDetails.EmployeeEmail" class="text-danger"></span>
+            <div class="form-group mt-4">
+                <label asp-for="@Model.EmployeeEmail" class="form-label"></label>
+                <input asp-for="@Model.EmployeeEmail" class="form-control" />
+                <span asp-validation-for="@Model.EmployeeEmail" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <label asp-for="profileImage" class="control-label"></label>
-                    <input asp-for="profileImage" class="form-control" />
-                    <span asp-validation-for="profileImage" class="text-danger"></span>
+            <div class="form-group mt-4">
+                <div class="custom-file">
+                    <label asp-for="@Model.profileImage" class="form-label"></label>
+                    <input asp-for="@Model.profileImage" class="custom-file-input" />
+                    <span asp-validation-for="@Model.profileImage" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-4">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
-</form>
+            </div>
+        </form>
     </div>
 </div>
-<div>
+<div class="mt-4">
     <a asp-action="Index">Back to List</a>
 </div>
 @section Scripts {

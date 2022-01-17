@@ -127,6 +127,7 @@ namespace SecretSanta.Data.Ado
                     ShowSantaDetails.SantaDetails.EmployeeEntity = (string)rdrSanta["entity"];
                     ShowSantaDetails.SantaDetails.EmployeePhone = (string)rdrSanta["phone"];
                     ShowSantaDetails.SantaDetails.EmployeeEmail = (string)rdrSanta["email"];
+                    //ShowSantaDetails.SantaDetails.ImagePath = (string)rdrSanta["imagePath"];
                 }
                 else
                 {
@@ -135,6 +136,7 @@ namespace SecretSanta.Data.Ado
                     ShowSantaDetails.SantaDetails.EmployeeEntity = "";
                     ShowSantaDetails.SantaDetails.EmployeePhone = "";
                     ShowSantaDetails.SantaDetails.EmployeeEmail = "";
+                    //ShowSantaDetails.SantaDetails.ImagePath = "";
                 }
                 rdrSanta.Close();
 
@@ -157,7 +159,7 @@ namespace SecretSanta.Data.Ado
             {
                 throw ex;
                 //_logger2.LogWarn(ex.Message);
-                //Console.WriteLine("Inner Exception:"+ex.Message);
+                //Console.WriteLine("Inner Exception:" + ex.Message);
             }
             finally
             {

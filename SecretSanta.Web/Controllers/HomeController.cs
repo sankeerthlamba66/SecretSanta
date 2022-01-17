@@ -5,17 +5,22 @@ using SecretSanta.Models.Views;
 using SecretSanta.Web.Models;
 using System.Diagnostics;
 using SecretSanta.Web.Code;
+using SecretSanta.Models.Logger;
+using NLog;
+using Microsoft.Extensions.Logging;
 
 namespace SecretSanta.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        public readonly ILoggerManager _logger1;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment)
+        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment, ILoggerManager logger1)
         {
             _logger = logger;
+            _logger1= logger1;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -48,8 +53,8 @@ namespace SecretSanta.Web.Controllers
             }
             catch (Exception ex)
             {
-                //_logger2.LogError(ex.ToString());
-                return View(BadRequest());
+                _logger1.LogError(ex.ToString());
+                return View("ErrorLog", );
             }
         }
 
@@ -58,36 +63,58 @@ namespace SecretSanta.Web.Controllers
         [IgnoreAntiforgeryToken]
         public IActionResult GetEmployeeDetails()
         {
-            if(Session.EmployeeId == null)
+            try
             {
-                return BadRequest();
+                if (Session.EmployeeId == null)
+                {
+                    return BadRequest();
+                }
+                var EmployeeDetails = new EmployeeManager().GetShowEmployeeData(Session.EmployeeId);
+                return View(EmployeeDetails);
             }
-            var ShowEmployeeDetails = new EmployeeManager().GetShowEmployeeData(Session.EmployeeId);
-            return View(ShowEmployeeDetails);
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpGet("/Home/EditEmployeeDetails")]
         public IActionResult EditEmployeeDetails()
         {
-            var showEmployeeDetails = new EmployeeManager().GetShowEmployeeData(Session.EmployeeId);
+            try
+            {
+                var employeeDetails = new EmployeeManager().GetEmployeeEdit(Session.EmployeeId);
 
+                EmployeeEdit employeeEdit = (EmployeeEdit)(EmployeeBase)employeeDetails;
 
-            return View(showEmployeeDetails);
+                return View(employeeEdit);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpPost]
-        public ActionResult EditEmployeeDetails(Employee EmployeeDetails)
+        public ActionResult EditEmployeeDetails(EmployeeEdit EmployeeDetails)
         {
-            EmployeeDetails.EmployeeNumber = Session.EmployeeId;
+            try
+            {
+                EmployeeDetails.EmployeeNumber = Session.EmployeeId;
 
-            //UploadProfile(EmployeeDetails.profileImage);
+                var strNewFilePath = Code.Helpers.UploadProfile(EmployeeDetails.profileImage, Path.Combine(_webHostEnvironment.WebRootPath, "/images"));
 
-            new EmployeeManager().updateEmployeeDetails(EmployeeDetails);
+                Employee employee = SecretSanta.Models.ModelConversions.ToEmployee(EmployeeDetails);
+                employee.ImagePath = strNewFilePath;
 
-            GetEmployeeDetails();
-            
-            return View("GetEmployeeDetails");
+                new EmployeeManager().updateEmployeeDetails(employee);
 
+                return RedirectToAction("GetEmployeeDetails");
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public IActionResult AllEmployeeDetails()
         {
@@ -108,27 +135,7 @@ namespace SecretSanta.Web.Controllers
         {
             return PartialView("", new EmployeeManager().getProjectDetails(Session.EmployeeId));
         }
-        [HttpPost("/UploadProfile")]
-        public void UploadProfile(IFormFile profileImage)
-        {
-            string uniqueFileName = null;
-            if (profileImage != null)
-            {
-                string uploadfolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + profileImage.FileName;
-                string filePath = Path.Combine(uploadfolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    profileImage.CopyTo(fileStream);
-                }
-                
-            }
-            new EmployeeManager().setImagePath(Session.EmployeeId, uniqueFileName);
-            
-            
-
-        }
-
+       
         public IActionResult Privacy()
         {
             return View();
