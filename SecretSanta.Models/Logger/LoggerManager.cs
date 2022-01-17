@@ -1,5 +1,4 @@
-﻿using Microsoft.Build.Framework;
-using NLog;
+﻿using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +22,7 @@ namespace SecretSanta.Models.Logger
         {
             logger.Info(message);
         }
-        public void LogWarn(string message)
+        public void LogWarning(string message)
         {
             logger.Warn(message);
         }

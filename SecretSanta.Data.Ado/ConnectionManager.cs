@@ -10,13 +10,6 @@ namespace SecretSanta.Data.Ado
 {
     internal class ConnectionManager
     {
-        public readonly ILoggerManager _logger;
-
-        public ConnectionManager(ILoggerManager logger)
-        {
-            _logger = logger;
-        }
-
         public static SqlConnection GetConnection()
         {
             try
@@ -26,8 +19,7 @@ namespace SecretSanta.Data.Ado
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.ToString());
-                return ("")
+                throw;
             }
         }
 
@@ -60,6 +52,33 @@ namespace SecretSanta.Data.Ado
             if (Reader != null && !Reader.IsClosed)
             {
                 Reader.Close();
+            }
+        }
+        public static SqlConnection GetConnectionLog()
+        {
+            try
+            {
+                SqlConnection NewConnection = new SqlConnection("Data Source=TEKFRIDAY282;Initial Catalog=Error_Log;User ID=sa;Password=friday123!;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                return NewConnection;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public static SqlConnection GetNewOpenConnectionLog()
+        {
+            try
+            {
+                SqlConnection NewConnection = GetConnectionLog();
+
+                NewConnection.Open();
+
+                return NewConnection;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }
