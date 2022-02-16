@@ -11,7 +11,7 @@ namespace SecretSanta.Data.Ado
     {
         public static SqlConnection GetConnection()
         {
-            SqlConnection NewConnection = new SqlConnection("Data Source=Tekfriday282;Initial Catalog=secret_santa;Persist Security Info=True;User ID=sa;Password=friday123!");
+            SqlConnection NewConnection = new SqlConnection("Data Source=TEJU;Initial Catalog=secret_santa;Integrated Security=True");
             return NewConnection;
         }
 
